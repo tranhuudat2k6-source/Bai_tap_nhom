@@ -6,13 +6,13 @@
     <title>Sơ Đồ Tiến Độ Dự Án - Sản Xuất Nhựa HDPE & Bao Bì Phân Hủy Sinh Học</title>
     <style>
         :root {
-            --bg-primary: #004d40; /* Đổi sang tone xanh lá phù hợp dự án "Green Wrap" */
+            --bg-primary: #004d40;
             --bg-body: #f4f6f9;
             --text-main: #2c3e50;
             --text-muted: #6c757d;
             --color-completed: #2e7d32;
-            --color-in-progress: #f57f17; /* Cam vàng */
-            --color-upcoming: #1976d2; /* Xanh dương */
+            --color-in-progress: #f57f17;
+            --color-upcoming: #1976d2;
             --color-today: #d32f2f;
             --border-color: #e2e8f0;
         }
@@ -22,14 +22,12 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* Header Card */
         .header-card { background: var(--bg-primary); color: white; padding: 24px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .header-card h1 { font-size: 24px; margin-bottom: 8px; }
         .header-card p { font-size: 14px; opacity: 0.85; margin-bottom: 16px; line-height: 1.5; }
         .tags { display: flex; gap: 10px; flex-wrap: wrap; }
         .tag { background: rgba(255, 255, 255, 0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;}
 
-        /* Stats Grid */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
         .stat-card { background: white; padding: 20px; border-radius: 10px; border: 1px solid var(--border-color); }
         .stat-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; }
@@ -39,11 +37,9 @@
         .progress-bg { background: #e9ecef; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 10px; }
         .progress-fill { background: var(--color-in-progress); height: 100%; transition: width 0.3s ease; }
 
-        /* Gantt Chart Container */
         .gantt-wrapper { background: white; border-radius: 10px; border: 1px solid var(--border-color); padding: 20px; overflow-x: auto; }
         .gantt-chart { min-width: 1000px; position: relative; }
 
-        /* Gantt Grid */
         .gantt-header, .gantt-row { display: grid; grid-template-columns: 340px repeat(var(--time-count, 6), 1fr); align-items: center; }
         .gantt-header { border-bottom: 2px solid var(--bg-primary); padding-bottom: 12px; font-weight: bold; font-size: 13px; text-align: center; }
         .gantt-header div:first-child { text-align: left; padding-left: 8px; }
@@ -55,14 +51,12 @@
         .task-sub { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
         .file-tag { background: #e0f2f1; color: #00695c; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-right: 4px; display: inline-block; margin-top: 4px;}
 
-        /* Gantt Bars */
         .bar-container { grid-column: 2 / -1; display: grid; grid-template-columns: repeat(var(--time-count, 6), 1fr); height: 100%; align-items: center; }
         .bar { height: 26px; border-radius: 13px; color: white; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; padding: 0 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); white-space: nowrap; overflow: hidden; }
         .bar.completed { background-color: var(--color-completed); }
         .bar.in-progress { background-color: var(--color-in-progress); }
         .bar.upcoming { background-color: var(--color-upcoming); }
 
-        /* Today Indicator Line */
         .today-line { position: absolute; top: 0; bottom: 0; width: 2px; background-color: var(--color-today); z-index: 5; pointer-events: none; }
         .today-badge { position: absolute; top: -25px; transform: translateX(-50%); background: var(--color-today); color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; white-space: nowrap; }
     </style>
@@ -81,16 +75,14 @@
 </div>
 
 <script>
-    // DỮ LIỆU CẤU HÌNH DỰ ÁN
     const projectData = {
         title: "Dự án: Sản xuất Nhựa HDPE & Bao bì Phân hủy Sinh học (Green Wrap)",
-        description: "Hồ sơ dự án tổng thể từ hoạch định chiến lược, báo cáo kỹ thuật, mô hình tài chính Excel, mã nguồn Python, cho đến thiết kế Website, Slide, Video và Infographic.",
+        description: "Hồ sơ dự án tối ưu với chuỗi logic chuẩn: Lập kế hoạch -> Hoàn thiện Tài chính (Excel) -> Xử lý dữ liệu (Python) -> Tổng hợp Báo cáo & Website -> Truyền thông Media.",
         meta: [
             "Thời lượng: 6 Tuần (03/09 - 15/10/2026)",
             "Tổng số File: 12 Hạng mục",
             "Trạng thái: Đang thực hiện"
         ],
-        // Chia timeline thành 6 tuần để dễ quản lý task ngắn ngày
         timeColumns: [
             "Tuần 1<br>(03/09-09/09)", 
             "Tuần 2<br>(10/09-16/09)", 
@@ -100,67 +92,64 @@
             "Tuần 6<br>(08/10-15/10)"
         ],
         
-        // Vị trí hôm nay (09/09 là cuối tuần 1 - chiếm khoảng 16% tổng thời lượng 43 ngày)
         todayPositionPercent: 16, 
         todayText: "Hôm nay 09/09",
 
-        // Tiến độ thống kê
         progressText: "Ngày thứ 7/43 – Hoàn thành 15%",
         progressPercent: 15,
-        currentStage: "Lập kế hoạch & Khởi tạo dữ liệu",
-        currentStageSub: "Xử lý Prompts AI, Python và Lên Gantt Chart",
+        currentStage: "Khởi tạo kế hoạch & Thiết lập Tài chính",
+        currentStageSub: "Xây dựng bảng Excel mô hình kinh doanh & giả định số liệu",
         nearestDeadline: "16/09/2026 – còn 7 ngày",
-        nearestDeadlineSub: "Hoàn thiện Code Python & Khung báo cáo chính",
+        nearestDeadlineSub: "Hoàn tất bộ số liệu Tài chính Excel & Khung báo cáo",
 
-        // Danh sách công việc (Gắn kèm các file từ Drive)
         tasks: [
             { 
                 id: "1", 
-                name: "Lập kế hoạch & AI Prompting", 
-                role: "Trưởng nhóm / Phân tích", 
+                name: "Lập kế hoạch tổng thể & Prompting AI", 
+                role: "Trưởng nhóm", 
                 files: ["File 5", "File 6", "File 8"],
                 start: 1, end: 1, status: "completed", label: "03/09 - 09/09" 
             },
             { 
                 id: "2", 
-                name: "Xây dựng Code & Xử lý số liệu", 
-                role: "Data / Dev", 
-                files: ["File 7: Python.ipynb"],
-                start: 1, end: 2, status: "in-progress", label: "Đang chạy • 05/09 - 15/09" 
+                name: "Xây dựng Bảng tính Tài chính (Chốt số liệu Excel)", 
+                role: "Bộ phận Tài chính", 
+                files: ["File 2: Bảng Excel"],
+                start: 1, end: 2, status: "in-progress", label: "Đang chạy • 05/09 - 16/09" 
             },
             { 
                 id: "3", 
-                name: "Thiết lập Bảng tính Tài chính", 
-                role: "Tài chính", 
-                files: ["File 2: Bảng Excel"],
-                start: 2, end: 3, status: "upcoming", label: "10/09 - 22/09" 
+                name: "Xây dựng Code Python & Phân tích dữ liệu", 
+                role: "Data / Dev", 
+                files: ["File 7: Python.ipynb"],
+                start: 2, end: 3, status: "upcoming", label: "15/09 - 23/09" 
             },
             { 
                 id: "4", 
-                name: "Soạn Báo cáo chính & Website", 
+                name: "Soạn Báo cáo chính & Hoàn thiện Website", 
                 role: "Nội dung", 
                 files: ["File 1", "File 3", "File 9", "File 10"],
-                start: 3, end: 4, status: "upcoming", label: "17/09 - 30/09" 
+                start: 3, end: 4, status: "upcoming", label: "20/09 - 30/09" 
             },
             { 
                 id: "5", 
-                name: "Thiết kế Slide & Infographic", 
+                name: "Thiết kế Slide thuyết trình & Infographic", 
                 role: "Designer", 
                 files: ["File 4: Slide", "File 11: Infographic"],
-                start: 4, end: 5, status: "upcoming", label: "26/09 - 07/10" 
+                start: 4, end: 5, status: "upcoming", label: "28/09 - 07/10" 
             },
             { 
                 id: "6", 
-                name: "Dựng Video/Media Pitching", 
+                name: "Dựng Video giới thiệu dự án (Green Wrap)", 
                 role: "Media", 
-                files: ["File 12: Green Wrap Video"],
+                files: ["File 12: Video"],
                 start: 5, end: 6, status: "upcoming", label: "04/10 - 12/10" 
             },
             { 
                 id: "7", 
-                name: "Đóng gói & Nộp toàn bộ dự án", 
+                name: "Kiểm tra tổng hợp 12 Files & Nộp bài", 
                 role: "Toàn bộ nhóm", 
-                files: ["Nộp 12/12 Files"],
+                files: ["Đóng gói 12 Files"],
                 start: 6, end: 6, status: "upcoming", label: "Deadline 15/10" 
             }
         ]
@@ -221,7 +210,6 @@
         const ganttBoard = document.getElementById('gantt-board');
         const todayLine = document.createElement('div');
         todayLine.className = 'today-line';
-        // Tính toán tọa độ thanh timeline hôm nay: Độ dài vùng text bên trái (340px) + Phần trăm của vùng Gantt
         todayLine.style.left = `calc(340px + (100% - 340px) * ${projectData.todayPositionPercent / 100})`;
         todayLine.innerHTML = `<div class="today-badge">${projectData.todayText}</div>`;
         ganttBoard.appendChild(todayLine);
